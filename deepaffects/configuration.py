@@ -2,16 +2,12 @@
 
 from __future__ import absolute_import
 
-import urllib3
-
-import sys
 import logging
+import sys
 
+import urllib3
 from six import iteritems
 from six.moves import http_client as httplib
-import os
-
-os.getenv()
 
 def singleton(cls, *args, **kw):
     instances = {}
@@ -30,17 +26,16 @@ class Configuration(object):
         Constructor
         """
         # Default Base url
-        self.host = "https://localhost"
+        self.host = "https://venkatesh9-prod.apigee.net/seernet-audio-apis"
         # Default api client
         self.api_client = None
         # Temp file folder for downloading files
         self.temp_folder_path = None
 
         # Authentication Settings
-        # dict to store API key(s)
-        self.api_key = {}
-        # dict to store API prefix (e.g. Bearer)
-        self.api_key_prefix = {}
+        self.api_key = None
+        # API prefix (e.g. Bearer)
+        self.api_key_prefix = None
         # Username for HTTP basic authentication
         self.username = ""
         # Password for HTTP basic authentication
@@ -159,17 +154,15 @@ class Configuration(object):
         self.__logger_format = value
         self.logger_formatter = logging.Formatter(self.__logger_format)
 
-    def get_api_key_with_prefix(self, identifier):
+    def get_api_key_with_prefix(self):
         """
         Gets API key (with prefix if set).
-
-        :param identifier: The identifier of apiKey.
         :return: The token for api key authentication.
         """
-        if self.api_key.get(identifier) and self.api_key_prefix.get(identifier):
-            return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]
-        elif self.api_key.get(identifier):
-            return self.api_key[identifier]
+        if self.api_key and self.api_key_prefix:
+            return self.api_key_prefix + ' ' + self.api_key
+        elif self.api_key:
+            return self.api_key
 
     def get_basic_auth_token(self):
         """
@@ -192,7 +185,7 @@ class Configuration(object):
                     'type': 'api_key',
                     'in': 'query',
                     'key': 'apikey',
-                    'value': self.get_api_key_with_prefix('apikey')
+                    'value': self.get_api_key_with_prefix()
                 },
 
         }

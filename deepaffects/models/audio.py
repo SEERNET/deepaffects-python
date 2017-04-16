@@ -5,11 +5,16 @@
 
     OpenAPI spec version: v1
 """
-
-
+try:
+    import StringIO as SIO
+except ImportError:
+    import io as SIO
+import base64
+import json
 from pprint import pformat
-from six import iteritems
 
+from pymediainfo import MediaInfo
+from six import iteritems
 
 class Audio(object):
     def __init__(self, encoding=None, sample_rate=None, language_code='en-US', content=None):
@@ -192,3 +197,26 @@ class Audio(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    @staticmethod
+    def from_file(file_name):
+        media_info = MediaInfo.parse(file_name)
+        codec = media_info.tracks[0].__dict__['codec']
+        sampling_rate = media_info.tracks[1].__dict__['sampling_rate']
+        fout = SIO.StringIO()
+        with open(file_name, 'rb') as fin:
+            audio_content = fin.read()
+        audio = Audio(encoding=codec, sample_rate=sampling_rate, language_code='en-US', content=base64.b64encode(audio_content))
+        fout.close()
+        return audio
+
+    @staticmethod
+    def from_json(content_str):
+        print(type(content_str))
+        content = json.loads(content_str)
+        audio = Audio(encoding=content['encoding'], sample_rate=content['sample_rate'],
+                      language_code=content['language_code'], content=content['content'])
+        return audio
+
+    def to_file(self, file_name):
+        base64.decode(SIO.StringIO(self.content), output=open(file_name, 'w'))
