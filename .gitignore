@@ -90,3 +90,5 @@ ENV/
 
 # IntelliJ project settings
 .idea/
+
+.DS_Store

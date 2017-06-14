@@ -5,7 +5,7 @@
 
     OpenAPI Specification of DeepAffects APIs
 
-    OpenAPI spec version: v1
+    OpenAPI spec version: 0.1.0
 """
 
 
@@ -17,11 +17,11 @@ import unittest
 
 import deepaffects
 from deepaffects.rest import ApiException
-from deepaffects.models.emotion_score import EmotionScore
+from deepaffects.models.async_response import AsyncResponse
 
 
-class TestEmotionScore(unittest.TestCase):
-    """ EmotionScore unit test stubs """
+class TestAsyncResponse(unittest.TestCase):
+    """ AsyncResponse unit test stubs """
 
     def setUp(self):
         pass
@@ -29,11 +29,11 @@ class TestEmotionScore(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testEmotionScore(self):
+    def testAsyncResponse(self):
         """
-        Test EmotionScore
+        Test AsyncResponse
         """
-        model = deepaffects.models.emotion_score.EmotionScore()
+        model = deepaffects.models.async_response.AsyncResponse()
 
 
 if __name__ == '__main__':

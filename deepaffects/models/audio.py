@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    OpenAPI Specification of DeepAffects audio APIs
+    DeepAffects
 
     OpenAPI spec version: v1
 """

@@ -1,5 +1,5 @@
-# deepaffects
-OpenAPI Specification of DeepAffects APIs
+# deepaffects-python
+Python client library for DeepAffects APIs
 
 - API version: v1
 - Package version: 1.0.0
@@ -55,13 +55,15 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = deepaffects.DenoiseApi()
 body = deepaffects.Audio() # Audio | Audio object that needs to be denoised.
+webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
+request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
 try:
     # Denoise an audio file
-    api_response = api_instance.denoise_audio(body)
+    api_response = api_instance.async_denoise_audio(body, webhook, request_id=request_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DenoiseApi->denoise_audio: %s\n" % e)
+    print("Exception when calling DenoiseApi->async_denoise_audio: %s\n" % e)
 
 ```
 
@@ -71,15 +73,19 @@ All URIs are relative to *https://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DenoiseApi* | [**denoise_audio**](docs/DenoiseApi.md#denoise_audio) | **POST** /api/v1/audio/denoise | Denoise an audio file
-*DiarizeApi* | [**diarize_audio**](docs/DiarizeApi.md#diarize_audio) | **POST** /api/v1/audio/diarize | Diarize an audio file
-*EllipsisApi* | [**is_depressed**](docs/EllipsisApi.md#is_depressed) | **POST** /api/v1/audio/ellipsis/is_depressed | Find if a person is depressed from audio.
-*EmotionApi* | [**recognise_emotion**](docs/EmotionApi.md#recognise_emotion) | **POST** /api/v1/audio/recognise_emotion | Find emotion in an audio file
-*FeaturizeApi* | [**featurize_audio**](docs/FeaturizeApi.md#featurize_audio) | **POST** /api/v1/audio/featurize | featurize an audio file
+*DenoiseApi* | [**async_denoise_audio**](docs/DenoiseApi.md#async_denoise_audio) | **POST** /api/v1/async/denoise | Denoise an audio file
+*DenoiseApi* | [**sync_denoise_audio**](docs/DenoiseApi.md#sync_denoise_audio) | **POST** /api/v1/sync/denoise | Denoise an audio file
+*DiarizeApi* | [**async_diarize_audio**](docs/DiarizeApi.md#async_diarize_audio) | **POST** /api/v1/async/diarize | Diarize an audio file
+*DiarizeApi* | [**sync_diarize_audio**](docs/DiarizeApi.md#sync_diarize_audio) | **POST** /api/v1/sync/diarize | Diarize an audio file
+*EmotionApi* | [**async_recognise_emotion**](docs/EmotionApi.md#async_recognise_emotion) | **POST** /api/v1/async/recognise_emotion | Find emotion in an audio file
+*EmotionApi* | [**sync_recognise_emotion**](docs/EmotionApi.md#sync_recognise_emotion) | **POST** /api/v1/sync/recognise_emotion | Find emotion in an audio file
+*FeaturizeApi* | [**async_featurize_audio**](docs/FeaturizeApi.md#async_featurize_audio) | **POST** /api/v1/async/featurize | featurize an audio file
+*FeaturizeApi* | [**sync_featurize_audio**](docs/FeaturizeApi.md#sync_featurize_audio) | **POST** /api/v1/sync/featurize | featurize an audio file
 
 
 ## Documentation For Models
 
+ - [AsyncResponse](docs/AsyncResponse.md)
  - [Audio](docs/Audio.md)
  - [DiarizeAudio](docs/DiarizeAudio.md)
  - [EmotionScore](docs/EmotionScore.md)

@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    DeepAffects Audio APIs
+    DeepAffects
 
-    OpenAPI Specification of DeepAffects audio APIs
+    OpenAPI Specification of DeepAffects APIs
 
 """
 
