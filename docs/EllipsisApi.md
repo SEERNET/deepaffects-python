@@ -1,4 +1,4 @@
-# swagger_client.EllipsisApi
+# deepaffects.EllipsisApi
 
 All URIs are relative to *https://localhost*
 
@@ -12,24 +12,21 @@ Method | HTTP request | Description
 
 Find if a person is depressed from audio.
 
-Find if a person is depressed from audio.
 
 ### Example 
 ```python
 from __future__ import print_statement
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import deepaffects
+from deepaffects.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: UserSecurity
-swagger_client.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
+deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = swagger_client.EllipsisApi()
-body = swagger_client.Audio() # Audio | Audio object that needs to be featurized.
+api_instance = deepaffects.EllipsisApi()
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be featurized.
 
 try: 
     # Find if a person is depressed from audio.

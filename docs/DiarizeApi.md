@@ -1,4 +1,4 @@
-# swagger_client.DiarizeApi
+# deepaffects.DiarizeApi
 
 All URIs are relative to *https://localhost*
 
@@ -19,18 +19,16 @@ Diarize an audio file.
 ```python
 from __future__ import print_statement
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import deepaffects
+from deepaffects.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: UserSecurity
-swagger_client.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
+deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = swagger_client.DiarizeApi()
-body = swagger_client.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
+api_instance = deepaffects.DiarizeApi()
+body = deepaffects.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
 webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
 request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
@@ -76,18 +74,16 @@ Diarize an audio file.
 ```python
 from __future__ import print_statement
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import deepaffects
+from deepaffects.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: UserSecurity
-swagger_client.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
+deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = swagger_client.DiarizeApi()
-body = swagger_client.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
+api_instance = deepaffects.DiarizeApi()
+body = deepaffects.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
 
 try: 
     # Diarize an audio file
