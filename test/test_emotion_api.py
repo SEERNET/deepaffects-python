@@ -15,15 +15,19 @@ import os
 import sys
 import unittest
 
+from deepaffects import Audio
+
 import deepaffects
 from deepaffects.rest import ApiException
 from deepaffects.apis.emotion_api import EmotionApi
+from .test_base_setup import DIR, AudioTest
 
 
 class TestEmotionApi(unittest.TestCase):
     """ EmotionApi unit test stubs """
 
     def setUp(self):
+        deepaffects.configuration.api_key['apikey'] = os.environ['DEEPAFFECTS_API_KEY']
         self.api = deepaffects.apis.emotion_api.EmotionApi()
 
     def tearDown(self):
@@ -43,6 +47,9 @@ class TestEmotionApi(unittest.TestCase):
 
         Find emotion in an audio file
         """
+        test_happy_audio = os.path.normpath(os.path.join(DIR, "data/happy.wav"))
+        body = Audio.from_file(file_name=test_happy_audio)
+        api_response = self.api.sync_recognise_emotion(body=body)
         pass
 
 

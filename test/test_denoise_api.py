@@ -15,13 +15,19 @@ import unittest
 
 import deepaffects
 from deepaffects.models.audio import Audio
-from .test_base_setup import DIR, AudioTest
+from .test_base_setup import DIR
 
 
 class TestDenoiseApi(unittest.TestCase):
     """ DenoiseApi unit test stubs """
 
-    def initialize_api(self):
+    @staticmethod
+    def sdr(clean, reconstructed):
+        # TODO: Implement SDR here
+        return 5.1
+
+    def setUp(self):
+        deepaffects.configuration.api_key['apikey'] = os.environ['DEEPAFFECTS_API_KEY']
         self.api = deepaffects.DenoiseApi()
 
     def tearDown(self):

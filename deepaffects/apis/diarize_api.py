@@ -216,7 +216,7 @@ class DiarizeApi(object):
         resource_path = '/audio/generic/api/v1/sync/diarize'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 

@@ -112,6 +112,8 @@ class ApiClient(object):
 
         # query parameters
         if query_params:
+            print("QUERY PARAM")
+            print(query_params)
             query_params = self.sanitize_for_serialization(query_params)
             query_params = self.parameters_to_tuples(query_params,
                                                      collection_formats)

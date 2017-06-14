@@ -220,7 +220,7 @@ class EmotionApi(object):
         resource_path = '/audio/generic/api/v1/sync/recognise_emotion'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 

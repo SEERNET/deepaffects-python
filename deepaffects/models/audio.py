@@ -206,7 +206,8 @@ class Audio(object):
         fout = SIO.StringIO()
         with open(file_name, 'rb') as fin:
             audio_content = fin.read()
-        audio = Audio(encoding=codec, sample_rate=sampling_rate, language_code='en-US', content=base64.b64encode(audio_content))
+        audio = Audio(encoding=codec, sample_rate=sampling_rate, language_code='en-US',
+                      content=base64.b64encode(audio_content).decode('utf-8'))
         fout.close()
         return audio
 
@@ -219,4 +220,4 @@ class Audio(object):
         return audio
 
     def to_file(self, file_name):
-        base64.decode(SIO.StringIO(self.content), output=open(file_name, 'w'))
+        base64.decode(SIO.StringIO(self.content), output=open(file_name, 'wb'))
