@@ -1,4 +1,4 @@
-# swagger_client.FeaturizeApi
+# deepaffects.FeaturizeApi
 
 All URIs are relative to *https://localhost*
 
@@ -17,20 +17,18 @@ Extract paralinguistic feature from an audio file.
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import deepaffects
+from deepaffects.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: UserSecurity
-swagger_client.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
+deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = swagger_client.FeaturizeApi()
-body = swagger_client.Audio() # Audio | Audio object that needs to be featurized.
+api_instance = deepaffects.FeaturizeApi()
+body = deepaffects.Audio.from_file('/path/to/file') # Audio | Audio object that needs to be featurized.
 webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
 request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
@@ -74,20 +72,18 @@ Extract paralinguistic feature from an audio file.
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import deepaffects
+from deepaffects.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: UserSecurity
-swagger_client.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
+deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = swagger_client.FeaturizeApi()
-body = swagger_client.Audio() # Audio | Audio object that needs to be featurized.
+api_instance = deepaffects.FeaturizeApi()
+body = deepaffects.Audio.from_file('/path/to/file') # Audio | Audio object that needs to be featurized.
 
 try: 
     # featurize an audio file

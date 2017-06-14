@@ -53,11 +53,9 @@ from pprint import pprint
 
 # Configure API key authorization: UserSecurity
 deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# swagger_client.configuration.api_key_prefix['apikey'] = 'Bearer'
 # create an instance of the API class
 api_instance = deepaffects.DenoiseApi()
-body = deepaffects.Audio() # Audio | Audio object that needs to be denoised.
+body = deepaffects.Audio.from_file('/path/to/file') # Audio | Audio object that needs to be denoised.
 webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
 request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
