@@ -1,4 +1,7 @@
 # deepaffects-python
+
+[![Build Status](https://travis-ci.org/SEERNET/deepaffects-python.svg)](https://travis-ci.org/SEERNET/deepaffects-python)
+
 Python client library for DeepAffects APIs
 
 - API version: v1
@@ -6,7 +9,7 @@ Python client library for DeepAffects APIs
 
 ## Requirements.
 
-Python 2.7 and 3.4+
+Python 2.7 and 3.3+
 
 ## Installation & Usage
 ### pip install
