@@ -32,7 +32,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            apt-get install mediainfo
+            sudo apt-get install mediainfo
             pip install -r requirements.txt
 
       - save_cache:
