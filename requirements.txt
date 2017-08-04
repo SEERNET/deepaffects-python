@@ -4,3 +4,4 @@ python_dateutil >= 2.5.3
 setuptools >= 21.0.0
 urllib3 >= 1.15.1
 pymediainfo >= 2.1.9
+nose >= 1.3.7
