@@ -11,7 +11,7 @@ Python client library for DeepAffects APIs
 
 Python 2.7 and 3.3+
 
-## Installation & Usage
+## Installation
 ### pip install
 
 The python package is hosted on Github, you can install directly from Github
@@ -40,9 +40,23 @@ Then import the package:
 import deepaffects
 ```
 
+## Documentation for Authorization
+
+DeepAffects API authenticates all the api requests via API Key.
+
+For API key registration and setup, checkout our [quickstart guide](https://developers.deepaffects.com/docs/#quickstart-guide)
+
+### UserSecurity
+
+- **Type**: API key
+- **API key parameter name**: apikey
+- **Location**: URL query string
+
+
 ## Getting Started
 
-Please follow the [installation procedure](#installation--usage) and then run the following:
+Please follow the [installation](#installation) instruction and execute the following python code:
+
 
 ```python
 from __future__ import print_function
@@ -92,7 +106,6 @@ Class | Method | HTTP request | Description
  - [EmotionScore](docs/EmotionScore.md)
 
 
-## Documentation For Authorization
 
 
 ## UserSecurity
@@ -102,7 +115,10 @@ Class | Method | HTTP request | Description
 - **Location**: URL query string
 
 
-## Author
+## About
+[DeepAffects](https://www.deepaffects.com/dashboard) is an emotional intelligence analysis engine that measures the effect emotional intelligence
+has on team dynamics, and provides emotional analytics that serve as the basis of insights to improve
+project management, performance and satisfaction across organizations, projects, and teams. To watch DeepAffects in action: check out DeepAffects [Atlassian JIRA addon](https://marketplace.atlassian.com/plugins/com.deepaffects.teams.jira/cloud/overview) and our [Github addon](https://teams.deepaffects.com/).
 
 
 
