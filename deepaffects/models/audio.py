@@ -28,7 +28,7 @@ class Audio(object):
         """
         self.swagger_types = {
             'encoding': 'str',
-            'sample_rate': 'int',
+            'sample_rate': 'str',
             'language_code': 'str',
             'content': 'str'
         }
@@ -77,7 +77,7 @@ class Audio(object):
         Sample rate of the audio file.
 
         :return: The sample_rate of this Audio.
-        :rtype: int
+        :rtype: str
         """
         return self._sample_rate
 
