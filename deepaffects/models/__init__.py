@@ -18,3 +18,4 @@ from .async_response import AsyncResponse
 from .audio import Audio
 from .diarize_audio import DiarizeAudio
 from .emotion_score import EmotionScore
+from .audio_features import AudioFeatures

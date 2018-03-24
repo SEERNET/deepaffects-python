@@ -213,7 +213,6 @@ class Audio(object):
 
     @staticmethod
     def from_json(content_str):
-        print(type(content_str))
         content = json.loads(content_str)
         audio = Audio(encoding=content['encoding'], sample_rate=content['sample_rate'],
                       language_code=content['language_code'], content=content['content'])

@@ -51,8 +51,6 @@ class TestEmotionApi(unittest.TestCase):
         test_happy_audio = os.path.normpath(os.path.join(DIR, "data/happy.mp3"))
         body = Audio.from_file(file_name=test_happy_audio)
         api_response = self.api.sync_recognise_emotion(body=body)
-        print(api_response)
-        print(type(api_response))
         assert api_response.happy > 0.90
 
 if __name__ == '__main__':
