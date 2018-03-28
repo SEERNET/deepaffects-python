@@ -26,7 +26,7 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepaffects.EllipsisApi()
-body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be featurized.
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object to predict depression.
 
 try: 
     # Find if a person is depressed from audio.
