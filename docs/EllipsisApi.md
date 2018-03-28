@@ -25,12 +25,12 @@ from pprint import pprint
 deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
-api_instance = deepaffects.EllipsisApi()
-body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be featurized.
+api_instance = deepaffects.EllipsisAPI()
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object to predict depression.
 
 try: 
     # Find if a person is depressed from audio.
-    api_response = api_instance.is_depressed(body)
+    api_response = api_instance.sync_is_depressed(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EllipsisApi->is_depressed: %s\n" % e)

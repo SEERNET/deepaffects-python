@@ -24,6 +24,7 @@ from .apis.denoise_api import DenoiseApi
 from .apis.diarize_api import DiarizeApi
 from .apis.emotion_api import EmotionApi
 from .apis.featurize_api import FeaturizeApi
+from .apis.ellipsis_api import EllipsisAPI
 
 # import ApiClient
 from .api_client import ApiClient

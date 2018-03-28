@@ -28,8 +28,8 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepaffects.EmotionApi()
-body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be featurized.
-webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object to extract emotions from.
+webhook = 'https://your_webhook.url' # str | The webhook url where result from async resource is posted
 request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
 try: 
@@ -83,7 +83,7 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepaffects.EmotionApi()
-body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be featurized.
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object to extract emotions from.
 
 try: 
     # Find emotion in an audio file

@@ -11,8 +11,6 @@ Method | HTTP request | Description
 # **async_denoise_audio**
 > AsyncResponse async_denoise_audio(body, webhook, request_id=request_id)
 
-Denoise an audio file
-
 Denoise an audio file.
 
 ### Example 
