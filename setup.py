@@ -18,7 +18,7 @@ setup(
     name=NAME,
     version=VERSION,
     description="DeepAffects APIs",
-    author_email="engineering@seernet.io",
+    author_email="support@seernet.io",
     url="https://github.com/SEERNET/deepaffects-python",
     author="Sushant Hiray, Venkatesh Duppada",
     setup_requires=[

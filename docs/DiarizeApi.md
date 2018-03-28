@@ -11,8 +11,6 @@ Method | HTTP request | Description
 # **async_diarize_audio**
 > AsyncResponse async_diarize_audio(body, webhook, request_id=request_id)
 
-Diarize an audio file
-
 Diarize an audio file.
 
 ### Example 
@@ -28,8 +26,8 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepaffects.DiarizeApi()
-body = deepaffects.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
-webhook = 'webhook_example' # str | The webhook url where result from async resource is posted
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be diarized.
+webhook = 'https://your_webhook.url' # str | The webhook url where result from async resource is posted
 request_id = 'request_id_example' # str | Unique identifier for the request (optional)
 
 try: 
@@ -83,7 +81,7 @@ deepaffects.configuration.api_key['apikey'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepaffects.DiarizeApi()
-body = deepaffects.DiarizeAudio() # DiarizeAudio | Audio object that needs to be diarized.
+body = deepaffects.Audio.from_file(file_name="/path/to/file") # Audio | Audio object that needs to be diarized.
 
 try: 
     # Diarize an audio file
