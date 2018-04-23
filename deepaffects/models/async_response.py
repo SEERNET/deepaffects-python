@@ -9,6 +9,7 @@
 from pprint import pformat
 
 from six import iteritems
+import json
 
 
 class AsyncResponse(object):
@@ -140,3 +141,10 @@ class AsyncResponse(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    @staticmethod
+    def from_json(content_str):
+        content = json.loads(content_str)
+        async_response = AsyncResponse(api=content["api"], request_id=content["request_id"])
+        return async_response
+

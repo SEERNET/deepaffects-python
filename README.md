@@ -90,8 +90,9 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DenoiseApi* | [**async_denoise_audio**](docs/DenoiseApi.md#async_denoise_audio) | **POST** /api/v1/async/denoise | Denoise an audio file
 *DenoiseApi* | [**sync_denoise_audio**](docs/DenoiseApi.md#sync_denoise_audio) | **POST** /api/v1/sync/denoise | Denoise an audio file
-*DiarizeApi* | [**async_diarize_audio**](docs/DiarizeApi.md#async_diarize_audio) | **POST** /api/v1/async/diarize | Diarize an audio file
-*DiarizeApi* | [**sync_diarize_audio**](docs/DiarizeApi.md#sync_diarize_audio) | **POST** /api/v1/sync/diarize | Diarize an audio file
+*DiarizeApiV2* | [**async_diarize_audio**](docs/DiarizeApiV2.md#async_diarize_audio) | **POST** /api/v2/async/diarize | Diarize an audio file
+*DiarizeApi* | [**async_diarize_audio**](docs/DiarizeApi.md#async_diarize_audio) | **POST** /api/v1/async/diarize | Diarize an audio file (Legacy)
+*DiarizeApi* | [**sync_diarize_audio**](docs/DiarizeApi.md#sync_diarize_audio) | **POST** /api/v1/sync/diarize | Diarize an audio file (Legacy)
 *EmotionApi* | [**async_recognise_emotion**](docs/EmotionApi.md#async_recognise_emotion) | **POST** /api/v1/async/recognise_emotion | Find emotion in an audio file
 *EmotionApi* | [**sync_recognise_emotion**](docs/EmotionApi.md#sync_recognise_emotion) | **POST** /api/v1/sync/recognise_emotion | Find emotion in an audio file
 *FeaturizeApi* | [**async_featurize_audio**](docs/FeaturizeApi.md#async_featurize_audio) | **POST** /api/v1/async/featurize | featurize an audio file

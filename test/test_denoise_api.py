@@ -33,9 +33,9 @@ class TestDenoiseApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_async_denoise_audio(self):
+    def test_sync_denoise_audio(self):
         """
-        Test case for async_denoise_audio
+        Test case for sync_denoise_audio
 
         Denoise an audio file
         """
