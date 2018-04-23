@@ -1,18 +1,28 @@
 # deepaffects-python
 
 [![Build Status](https://travis-ci.org/SEERNET/deepaffects-python.svg)](https://travis-ci.org/SEERNET/deepaffects-python)
+[![PyPI version](https://badge.fury.io/py/deepaffects.svg)](https://badge.fury.io/py/deepaffects)
 
 Python client library for DeepAffects APIs
-
-- API version: v1
-- Package version: 1.0.0
 
 ## Requirements.
 
 Python 2.7 and 3.3+
 
+pymediainfo >= 2.1.9, this is a wrapper library around [mediainfo](https://mediaarea.net/en/MediaInfo), which we use to
+extract the sampling rate and codec information from audio files.
+
 ## Installation
+
 ### pip install
+
+The python package can be installed directly from pip using:
+
+```bash
+pip install deepaffects
+
+```
+### pip install from github
 
 The python package is hosted on Github, you can install directly from Github
 
@@ -87,24 +97,24 @@ except ApiException as e:
 All URIs are relative to *https://localhost*
 
 Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*DenoiseApi* | [**async_denoise_audio**](docs/DenoiseApi.md#async_denoise_audio) | **POST** /api/v1/async/denoise | Denoise an audio file
-*DenoiseApi* | [**sync_denoise_audio**](docs/DenoiseApi.md#sync_denoise_audio) | **POST** /api/v1/sync/denoise | Denoise an audio file
-*DiarizeApiV2* | [**async_diarize_audio**](docs/DiarizeApiV2.md#async_diarize_audio) | **POST** /api/v2/async/diarize | Diarize an audio file
-*DiarizeApi* | [**async_diarize_audio**](docs/DiarizeApi.md#async_diarize_audio) | **POST** /api/v1/async/diarize | Diarize an audio file (Legacy)
-*DiarizeApi* | [**sync_diarize_audio**](docs/DiarizeApi.md#sync_diarize_audio) | **POST** /api/v1/sync/diarize | Diarize an audio file (Legacy)
-*EmotionApi* | [**async_recognise_emotion**](docs/EmotionApi.md#async_recognise_emotion) | **POST** /api/v1/async/recognise_emotion | Find emotion in an audio file
-*EmotionApi* | [**sync_recognise_emotion**](docs/EmotionApi.md#sync_recognise_emotion) | **POST** /api/v1/sync/recognise_emotion | Find emotion in an audio file
-*FeaturizeApi* | [**async_featurize_audio**](docs/FeaturizeApi.md#async_featurize_audio) | **POST** /api/v1/async/featurize | featurize an audio file
-*FeaturizeApi* | [**sync_featurize_audio**](docs/FeaturizeApi.md#sync_featurize_audio) | **POST** /api/v1/sync/featurize | featurize an audio file
+----------------- | --------------------------------------- | ------------- | -------------
+*DenoiseApi* | [async_denoise_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DenoiseApi.md#async_denoise_audio) | **POST** /api/v1/async/denoise | Denoise an audio file
+*DenoiseApi* | [sync_denoise_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DenoiseApi.md#sync_denoise_audio) | **POST** /api/v1/sync/denoise | Denoise an audio file
+*DiarizeApiV2* | [async_diarize_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DiarizeApiV2.md#async_diarize_audio) | **POST** /api/v2/async/diarize | Diarize an audio file
+*DiarizeApi* | [async_diarize_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DiarizeApi.md#async_diarize_audio) | **POST** /api/v1/async/diarize | Diarize an audio file (Legacy)
+*DiarizeApi* | [sync_diarize_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DiarizeApi.md#sync_diarize_audio) | **POST** /api/v1/sync/diarize | Diarize an audio file (Legacy)
+*EmotionApi* | [async_recognise_emotion](https://github.com/SEERNET/deepaffects-python/blob/master/docs/EmotionApi.md#async_recognise_emotion) | **POST** /api/v1/async/recognise_emotion | Find emotion in an audio file
+*EmotionApi* | [sync_recognise_emotion](https://github.com/SEERNET/deepaffects-python/blob/master/docs/EmotionApi.md#sync_recognise_emotion) | **POST** /api/v1/sync/recognise_emotion | Find emotion in an audio file
+*FeaturizeApi* | [async_featurize_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/FeaturizeApi.md#async_featurize_audio) | **POST** /api/v1/async/featurize | featurize an audio file
+*FeaturizeApi* | [sync_featurize_audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/FeaturizeApi.md#sync_featurize_audio) | **POST** /api/v1/sync/featurize | featurize an audio file
 
 
 ## Documentation For Models
 
- - [AsyncResponse](docs/AsyncResponse.md)
- - [Audio](docs/Audio.md)
- - [DiarizeAudio](docs/DiarizeAudio.md)
- - [EmotionScore](docs/EmotionScore.md)
+ - [AsyncResponse](https://github.com/SEERNET/deepaffects-python/blob/master/docs/AsyncResponse.md)
+ - [Audio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/Audio.md)
+ - [DiarizeAudio](https://github.com/SEERNET/deepaffects-python/blob/master/docs/DiarizeAudio.md)
+ - [EmotionScore](https://github.com/SEERNET/deepaffects-python/blob/master/docs/EmotionScore.md)
 
 
 
