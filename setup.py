@@ -2,10 +2,10 @@
 
 
 from setuptools import setup, find_packages
-from pypandoc import convert
+import os
 
 NAME = "deepaffects"
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 # To install the library, run the following
 #
 # python setup.py install
@@ -16,7 +16,17 @@ VERSION = "1.1.1"
 REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "pymediainfo >= 2.1.9"]
 
 def readme():
-    return convert('README.md', 'rst')
+    try:
+        from pypandoc import convert
+        return convert('README.md', 'rst')
+
+    except ImportError:
+        with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+            return readme.read()
+
+    except OSError:
+        with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+            return readme.read()
 
 setup(
     name=NAME,
