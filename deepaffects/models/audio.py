@@ -199,14 +199,14 @@ class Audio(object):
         return not self == other
 
     @staticmethod
-    def from_file(file_name):
+    def from_file(file_name, language_code='en-US'):
         media_info = MediaInfo.parse(file_name)
         codec = media_info.tracks[0].__dict__['codec']
         sampling_rate = media_info.tracks[1].__dict__['sampling_rate']
         fout = SIO.StringIO()
         with open(file_name, 'rb') as fin:
             audio_content = fin.read()
-        audio = Audio(encoding=codec, sample_rate=sampling_rate, language_code='en-US',
+        audio = Audio(encoding=codec, sample_rate=sampling_rate, language_code=language_code,
                       content=base64.b64encode(audio_content).decode('utf-8'))
         fout.close()
         return audio

@@ -8,12 +8,22 @@
 """
 
 
+try:
+    import StringIO as SIO
+except ImportError:
+    import io as SIO
+import base64
+import json
 from pprint import pformat
+
+from pymediainfo import MediaInfo
 from six import iteritems
+
 
 class DiarizeAudio(object):
 
-    def __init__(self, encoding=None, sample_rate=None, language_code='en-US', content=None, speakers=-1):
+    def __init__(self, encoding=None, sample_rate=None, language_code='en-US', content=None, speakers=-1,
+                 merge_segments=True, audio_type="default"):
         """
         DiarizeAudio - a model defined in Swagger
 
@@ -27,7 +37,9 @@ class DiarizeAudio(object):
             'sample_rate': 'int',
             'language_code': 'str',
             'content': 'str',
-            'speakers': 'int'
+            'speakers': 'int',
+            'audio_type': 'str',
+            'merge_segments': 'bool'
         }
 
         self.attribute_map = {
@@ -35,7 +47,9 @@ class DiarizeAudio(object):
             'sample_rate': 'sampleRate',
             'language_code': 'languageCode',
             'content': 'content',
-            'speakers': 'speakers'
+            'speakers': 'speakers',
+            'audio_type': 'audioType',
+            'merge_segments': 'vad'
         }
 
         self._encoding = encoding
@@ -43,6 +57,8 @@ class DiarizeAudio(object):
         self._language_code = language_code
         self._content = content
         self._speakers = speakers
+        self._merge_segments = merge_segments
+        self._audio_type = audio_type
 
     @property
     def encoding(self):
@@ -169,6 +185,55 @@ class DiarizeAudio(object):
 
         self._speakers = speakers
 
+    @property
+    def audio_type(self):
+        """
+        Gets the corresponding type of audio file
+        example: meeting, call-center, default
+
+        :return: The audio_type of this DiarizeAudio.
+        :rtype: str
+        """
+        return self._audio_type
+
+    @audio_type.setter
+    def audio_type(self, audio_type):
+        """
+        Sets the audio_type of this DiarizeAudio.
+        Corresponding type of audio file like meeting, call-center, default
+
+        :param encoding: The audio_type of this DiarizeAudio.
+        :type: str
+        """
+        if audio_type is None:
+            raise ValueError("Invalid value for `audio_type`, must not be `None`")
+
+        self._audio_type = audio_type
+
+    @property
+    def merge_segments(self):
+        """
+        Whether the consecutive segments of same speaker should be merged
+
+        :return: The merge_segments of this DiarizeAudio.
+        :rtype: bool
+        """
+        return self._merge_segments
+
+    @merge_segments.setter
+    def merge_segments(self, merge_segments):
+        """
+        Sets the merge_segments of this DiarizeAudio.
+        Whether the consecutive segments of same speaker should be merged
+
+        :param encoding: The merge_segments of this DiarizeAudio.
+        :type: str
+        """
+        if merge_segments is None:
+            raise ValueError("Invalid value for `merge_segments`, must not be `None`")
+
+        self._merge_segments = merge_segments
+
     def to_dict(self):
         """
         Returns the model properties as a dict
@@ -221,3 +286,26 @@ class DiarizeAudio(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    @staticmethod
+    def from_file(file_name, language_code='en-US', speakers=-1, merge_segments=True, audio_type='default'):
+        media_info = MediaInfo.parse(file_name)
+        codec = media_info.tracks[0].__dict__['codec']
+        sampling_rate = media_info.tracks[1].__dict__['sampling_rate']
+        fout = SIO.StringIO()
+        with open(file_name, 'rb') as fin:
+            audio_content = fin.read()
+        audio = DiarizeAudio(encoding=codec, sample_rate=sampling_rate, language_code=language_code,
+                             content=base64.b64encode(audio_content).decode('utf-8'), speakers=speakers,
+                             merge_segments=merge_segments, audio_type=audio_type)
+        fout.close()
+        return audio
+
+    @staticmethod
+    def from_json(content_str):
+        content = json.loads(content_str)
+        audio = DiarizeAudio(encoding=content['encoding'], sample_rate=content['sample_rate'],
+                             language_code=content['language_code'], content=content['content'],
+                             speakers=content['speakers'], merge_segments=content['merge_segments'],
+                             audio_type=content['audio_type'])
+        return audio
