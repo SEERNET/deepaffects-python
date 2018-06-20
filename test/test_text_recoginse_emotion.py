@@ -41,11 +41,11 @@ class TestTextEmootion(unittest.TestCase):
         """
 
         body = {
-            "content": "You are so bad"
+            "content": "Awesome"
         }
         api_response = self.api.sync_text_recognise_emotion(body=body)        
         print(api_response)
-        assert api_response['response']['joy']> 0.8
+        assert api_response['response']['trust']> 0.8
 
 
 if __name__ == '__main__':
