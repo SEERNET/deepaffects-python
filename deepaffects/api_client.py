@@ -217,13 +217,14 @@ class ApiClient(object):
         # handle file downloading
         # save response body into a tmp file and return the instance
         if response_type == "file":
-            return self.__deserialize_file(response)
-
+            return self.__deserialize_file(response)        
         # fetch data from response object
         try:
             data = json.loads(response.data)
         except ValueError:
             data = response.data
+        if response_type == "json":
+            return self.__deserialize_object(data)
 
         return self.__deserialize(data, response_type)
 
