@@ -91,4 +91,7 @@ ENV/
 # IntelliJ project settings
 .idea/
 
+#vscode
+.vscode
+
 .DS_Store
