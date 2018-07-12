@@ -17,7 +17,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     name='deepaffects-realtime.proto',
     package='deepaffectsrealtime',
     syntax='proto3',
-    serialized_pb=_b('\n\x1a\x64\x65\x65paffects-realtime.proto\x12\x13\x64\x65\x65paffectsrealtime\"\xa1\x01\n\x0cSegmentChunk\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\x10\n\x08\x65ncoding\x18\x03 \x01(\t\x12\x14\n\x0clanguageCode\x18\x04 \x01(\t\x12\x12\n\nsampleRate\x18\x05 \x01(\x05\x12\x0f\n\x07userIds\x18\x06 \x03(\t\x12\x15\n\rsegmentOffset\x18\x07 \x01(\x02\x12\x10\n\x08\x64uration\x18\x08 \x01(\x02\"H\n\x0eSegmentSpeaker\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06userId\x18\x02 \x01(\t\x12\r\n\x05start\x18\x03 \x01(\x02\x12\x0b\n\x03\x65nd\x18\x04 \x01(\x02\"I\n\x0eSegmentEmotion\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05start\x18\x02 \x01(\x02\x12\x0b\n\x03\x65nd\x18\x03 \x01(\x02\x12\x0f\n\x07\x65motion\x18\x04 \x01(\t2\xd7\x01\n\x13\x44\x65\x65pAffectsRealtime\x12_\n\x0fIdentifySpeaker\x12!.deepaffectsrealtime.SegmentChunk\x1a#.deepaffectsrealtime.SegmentSpeaker\"\x00(\x01\x30\x01\x12_\n\x0fIdentifyEmotion\x12!.deepaffectsrealtime.SegmentChunk\x1a#.deepaffectsrealtime.SegmentEmotion\"\x00(\x01\x30\x01\x42;\n\x1cio.grpc.examples.deepaffectsB\x13\x44\x65\x65paffectsRealtimeP\x01\xa2\x02\x03\x44RIb\x06proto3')
+    serialized_pb=_b('\n\x1a\x64\x65\x65paffects-realtime.proto\x12\x13\x64\x65\x65paffectsrealtime\"\xb0\x01\n\x0cSegmentChunk\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\x12\x10\n\x08\x65ncoding\x18\x03 \x01(\t\x12\x14\n\x0clanguageCode\x18\x04 \x01(\t\x12\x12\n\nsampleRate\x18\x05 \x01(\x05\x12\x0f\n\x07userIds\x18\x06 \x03(\t\x12\x15\n\rsegmentOffset\x18\x07 \x01(\x02\x12\x10\n\x08\x64uration\x18\x08 \x01(\x02\x12\r\n\x05\x45rror\x18\t \x01(\t\"W\n\x0eSegmentSpeaker\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06userId\x18\x02 \x01(\t\x12\r\n\x05start\x18\x03 \x01(\x02\x12\x0b\n\x03\x65nd\x18\x04 \x01(\x02\x12\r\n\x05\x45rror\x18\x05 \x01(\t\"X\n\x0eSegmentEmotion\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05start\x18\x02 \x01(\x02\x12\x0b\n\x03\x65nd\x18\x03 \x01(\x02\x12\x0f\n\x07\x65motion\x18\x04 \x01(\t\x12\r\n\x05\x45rror\x18\x05 \x01(\t2\xd7\x01\n\x13\x44\x65\x65pAffectsRealtime\x12_\n\x0fIdentifySpeaker\x12!.deepaffectsrealtime.SegmentChunk\x1a#.deepaffectsrealtime.SegmentSpeaker\"\x00(\x01\x30\x01\x12_\n\x0fIdentifyEmotion\x12!.deepaffectsrealtime.SegmentChunk\x1a#.deepaffectsrealtime.SegmentEmotion\"\x00(\x01\x30\x01\x42;\n\x1cio.grpc.examples.deepaffectsB\x13\x44\x65\x65paffectsRealtimeP\x01\xa2\x02\x03\x44RIb\x06proto3')
 )
 
 
@@ -84,6 +84,13 @@ _SEGMENTCHUNK = _descriptor.Descriptor(
             message_type=None, enum_type=None, containing_type=None,
             is_extension=False, extension_scope=None,
             options=None, file=DESCRIPTOR),
+        _descriptor.FieldDescriptor(
+            name='Error', full_name='deepaffectsrealtime.SegmentChunk.Error', index=8,
+            number=9, type=9, cpp_type=9, label=1,
+            has_default_value=False, default_value=_b("").decode('utf-8'),
+            message_type=None, enum_type=None, containing_type=None,
+            is_extension=False, extension_scope=None,
+            options=None, file=DESCRIPTOR),
     ],
     extensions=[
     ],
@@ -97,7 +104,7 @@ _SEGMENTCHUNK = _descriptor.Descriptor(
     oneofs=[
     ],
     serialized_start=52,
-    serialized_end=213,
+    serialized_end=228,
 )
 
 
@@ -136,6 +143,13 @@ _SEGMENTSPEAKER = _descriptor.Descriptor(
             message_type=None, enum_type=None, containing_type=None,
             is_extension=False, extension_scope=None,
             options=None, file=DESCRIPTOR),
+        _descriptor.FieldDescriptor(
+            name='Error', full_name='deepaffectsrealtime.SegmentSpeaker.Error', index=4,
+            number=5, type=9, cpp_type=9, label=1,
+            has_default_value=False, default_value=_b("").decode('utf-8'),
+            message_type=None, enum_type=None, containing_type=None,
+            is_extension=False, extension_scope=None,
+            options=None, file=DESCRIPTOR),
     ],
     extensions=[
     ],
@@ -148,8 +162,8 @@ _SEGMENTSPEAKER = _descriptor.Descriptor(
     extension_ranges=[],
     oneofs=[
     ],
-    serialized_start=215,
-    serialized_end=287,
+    serialized_start=230,
+    serialized_end=317,
 )
 
 
@@ -188,6 +202,13 @@ _SEGMENTEMOTION = _descriptor.Descriptor(
             message_type=None, enum_type=None, containing_type=None,
             is_extension=False, extension_scope=None,
             options=None, file=DESCRIPTOR),
+        _descriptor.FieldDescriptor(
+            name='Error', full_name='deepaffectsrealtime.SegmentEmotion.Error', index=4,
+            number=5, type=9, cpp_type=9, label=1,
+            has_default_value=False, default_value=_b("").decode('utf-8'),
+            message_type=None, enum_type=None, containing_type=None,
+            is_extension=False, extension_scope=None,
+            options=None, file=DESCRIPTOR),
     ],
     extensions=[
     ],
@@ -200,8 +221,8 @@ _SEGMENTEMOTION = _descriptor.Descriptor(
     extension_ranges=[],
     oneofs=[
     ],
-    serialized_start=289,
-    serialized_end=362,
+    serialized_start=319,
+    serialized_end=407,
 )
 
 DESCRIPTOR.message_types_by_name['SegmentChunk'] = _SEGMENTCHUNK
@@ -241,8 +262,8 @@ _DEEPAFFECTSREALTIME = _descriptor.ServiceDescriptor(
     file=DESCRIPTOR,
     index=0,
     options=None,
-    serialized_start=365,
-    serialized_end=580,
+    serialized_start=410,
+    serialized_end=625,
     methods=[
         _descriptor.MethodDescriptor(
             name='IdentifySpeaker',
