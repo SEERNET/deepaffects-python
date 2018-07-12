@@ -1,10 +1,10 @@
-from deepaffects.realtime.util import get_segment_chunk_from_pydub_chunk, get_deepaffects_client
+from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file
 
 TIMEOUT_SECONDS = 2000
 apikey = "YOUR_API_KEY"
 file_path = "FILE_PATH"
 languageCode = "en-Us"
-sampleRate = 16000
+sampleRate = "16000"
 encoding = "wav"
 
 # DeepAffects realtime Api client

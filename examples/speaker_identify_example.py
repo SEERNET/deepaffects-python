@@ -1,12 +1,12 @@
-from deepaffects.realtime.util import get_segment_chunk_from_pydub_chunk, get_deepaffects_client, chunk_generator_from_file
+from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file
 
 TIMEOUT_SECONDS = 300
-API_KEY = "YOUR_API_KEY"
+apikey = "YOUR_API_KEY"
 file_path = "FILE_PATH"
 languageCode = "en-Us"
-sampleRate = 16000
+sampleRate = "16000"
 encoding = "wav"
-userIds = "list of userids for for speaker verification"
+userIds = "list of userids for for speaker verification seperated by ','"
 
 # DeepAffects realtime Api client
 client = get_deepaffects_client()
