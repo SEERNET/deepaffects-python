@@ -27,6 +27,7 @@ import base64
 from pydub import AudioSegment
 import deepaffects.realtime.deepaffects_realtime_pb2_grpc as deepaffects_grpc
 import deepaffects.realtime.deepaffects_realtime_pb2 as deepaffects_types
+from deepaffects.realtime.types import segment_chunk
 
 
 def encode_to_base64(file):
@@ -34,11 +35,11 @@ def encode_to_base64(file):
         return base64.b64encode(f1.read()).decode('utf-8')
 
 
-def get_segment(chunk, offset, i, userIds=None):
+def get_segment_chunk_from_pydub_chunk(chunk, offset, i, userIds=None):
 
-    base64_chunk = audio_segment_to_base64(chunk)
-    print("Sending chunk %s - with size :- %s" % (i, len(chunk) / 100))
-    audio_segments = make_input_audio_segments(
+    base64_chunk = pydub_segment_to_base64(chunk)
+    print("Sending chunk %s - with size :- %s sec" % (i, len(chunk) / 1000))
+    audio_segments = segment_chunk(
         encoding="wav",
         languageCode="en-US",
         sampleRate=8000,
@@ -50,29 +51,72 @@ def get_segment(chunk, offset, i, userIds=None):
     return audio_segments, offset
 
 
-def audio_segment_to_base64(chunk, i="test"):
-    chunk_file = "chunk_{}.wav".format(i)
+def pydub_segment_to_base64(chunk):
+    chunk_file = "chunk.wav"
     with open(chunk_file, "wb") as f:
         chunk.export(f, format="wav")
     base64_chunk = encode_to_base64(chunk_file)
+    os.remove(chunk_file)
     return base64_chunk
 
 
-def make_input_audio_segments(content, encoding, languageCode, sampleRate, segmentOffset, duration, userIds=None):
-    return deepaffects_types.SegmentChunk(
-        content=content,
-        encoding=encoding,
-        languageCode=languageCode,
-        sampleRate=sampleRate,
-        userIds=userIds,
-        duration=duration,
-        segmentOffset=segmentOffset)
-
-
 def get_deepaffects_client():
-    channel = grpc.insecure_channel('realtime.deepaffects.com:80')
+    channel = grpc.insecure_channel('localhost:50051')
     stub = deepaffects_grpc.DeepAffectsRealtimeStub(channel)
     return stub
+
+
+def chunk_generator_from_file(file_path, min_chunk_size=3000, max_chunk_size=15500):
+    # Implement this generator function to yield Audio segments
+    # To generate Audio Segments use make_input_audio_segment
+    """chunk_generator_from_file.
+
+    Args:
+        encoding : Audio Encoding,
+        languageCode: language code , 
+        sampleRate: sample rate of audio , 
+        content: base64 encoded audio, 
+        segmentOffset: offset of the segment in complete audio stream
+    """
+
+    """
+    Sample implementation which reads audio from a file and splits it into 
+    segments more than 3 sec
+    AudioSegment and yields base64 encoded audio segment objects asynchronously
+    """
+    audio_clip = AudioSegment.from_file(file_path)
+    offset = None
+    previous_chunk = None
+
+    for i, chunk in enumerate(audio_clip[::15500]):
+
+        if offset is None:
+            offset = 0
+
+        if previous_chunk is not None:
+
+            if len(chunk) <= 3000:
+
+                previous_chunk = previous_chunk + chunk
+                audio_segment, offset = get_segment(previous_chunk, offset, i)
+                yield audio_segment
+
+            elif (len(chunk) < 15500) and (len(chunk) > 3000):
+
+                audio_segment, offset = get_segment(previous_chunk, offset, i)
+                previous_chunk = chunk
+                yield audio_segment
+                audio_segment, offset = get_segment(previous_chunk, offset, i)
+                yield audio_segment
+
+            else:
+
+                audio_segment, offset = get_segment(previous_chunk, offset, i)
+                previous_chunk = chunk
+                yield audio_segment
+
+        if previous_chunk is None:
+            previous_chunk = chunk
 
 
 # def generate_chunks():

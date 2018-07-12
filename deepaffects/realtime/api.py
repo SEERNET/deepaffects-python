@@ -29,44 +29,10 @@ import deepaffects.realtime.deepaffects_realtime_pb2_grpc as deepaffects_grpc
 import deepaffects.realtime.deepaffects_realtime_pb2 as deepaffects_types
 
 
-def encode_to_base64(file):
-    with open(file, "rb") as f1:
-        return base64.b64encode(f1.read()).decode('utf-8')
-
-
-def get_segment(chunk, offset, i, userIds=None):
-
-    base64_chunk = audio_segment_to_base64(chunk)
-    print("Sending chunk %s/%s" % (i, len(chunk)))
-    audio_segments = make_input_audio_segments(
-        encoding="wav",
-        languageCode="en-US",
-        sampleRate=8000,
-        content=base64_chunk,
-        duration=len(chunk) / 1000,
-        userIds=userIds,
-        segmentOffset=offset)
-    offset = (offset + len(chunk) / 1000)
-    return audio_segments, offset
-
-
-def audio_segment_to_base64(chunk, i="test"):
-    chunk_file = "chunk_{}.wav".format(i)
-    with open(chunk_file, "wb") as f:
-        chunk.export(f, format="wav")
-    base64_chunk = encode_to_base64(chunk_file)
-    return base64_chunk
-
-
-def make_input_audio_segments(content, encoding, languageCode, sampleRate, segmentOffset, duration, userIds=None):
-    return deepaffects_types.SegmentChunk(
-        content=content,
-        encoding=encoding,
-        languageCode=languageCode,
-        sampleRate=sampleRate,
-        userIds=userIds,
-        duration=duration,
-        segmentOffset=segmentOffset)
+configuration = {
+    "TIMEOUT_SECONDS" = 2000,
+    "API_KEY" = ""
+}
 
 
 def get_deepaffects_client():
