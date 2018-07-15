@@ -9,6 +9,8 @@ import sys
 import pydub
 import base64
 from pydub import AudioSegment
+from pytube.request import get
+from pydub import AudioSegment
 
 import deepaffects.realtime.deepaffects_realtime_pb2_grpc as deepaffects_grpc
 import deepaffects.realtime.deepaffects_realtime_pb2 as deepaffects_types
@@ -106,3 +108,27 @@ def chunk_generator_from_file(file_path, max_chunk_size=15500, min_chunk_size=30
                     chunk, offset, i)
                 yield audio_segment
             previous_chunk = chunk
+
+
+def chunk_generator_from_url(file_url, is_youtube=False, chunk_size=20 * 7048):
+    if is_youtube:
+        print(file_url)
+        yt = YouTube(file_url)
+        stream = yt.streams.filter(only_audio=True).first()
+        download_url = stream.url
+    else:
+        download_url = file_url
+
+    final_chunk = None
+    last_seg_len = 0
+    for i, chunk in enumerate(get(url=download_url, streaming=True, chunk_size=chunk_size)):
+        if final_chunk is None:
+            final_chunk = chunk
+        else:
+            final_chunk = final_chunk + chunk
+        seg = AudioSegment.from_file(io.BytesIO(
+            final_chunk))
+        audio_segment, offset = get_segment_chunk_from_pydub_chunk(
+            seg[last_seg_len:], last_seg_len / 1000, i)
+        yield audio_segment
+        last_seg_len = int(seg.duration_seconds * 1000)
