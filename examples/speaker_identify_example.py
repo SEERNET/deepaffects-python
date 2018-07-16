@@ -1,4 +1,4 @@
-from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file
+from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file, chunk_generator_from_url
 
 TIMEOUT_SECONDS = 300
 apikey = "YOUR_API_KEY"
