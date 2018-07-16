@@ -7,3 +7,4 @@ pydub==0.22.1
 six==1.11.0
 grpcio==1.13.0
 protobuf==3.6.0
+pytube==9.2.2

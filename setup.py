@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 import os
 
 NAME = "deepaffects"
-VERSION = "1.1.4"
+VERSION = "1.1.5"
 # To install the library, run the following
 #
 # python setup.py install
@@ -14,7 +14,7 @@ VERSION = "1.1.4"
 # http://pypi.python.org/pypi/setuptools
 
 REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "pymediainfo >= 2.1.9", "grpcio==1.13.0",
-            "protobuf==3.6.0", "pydub==0.22.1"]
+            "protobuf==3.6.0", "pydub==0.22.1", "pytube==9.2.2"]
 
 
 def readme():
