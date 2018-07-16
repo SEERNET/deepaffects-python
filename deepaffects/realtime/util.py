@@ -110,7 +110,7 @@ def chunk_generator_from_file(file_path, max_chunk_size=15500, min_chunk_size=30
             previous_chunk = chunk
 
 
-def chunk_generator_from_url(file_path, is_youtube_url=False, chunk_size=20 * 6048):
+def chunk_generator_from_url(file_path, is_youtube_url=False, chunk_size=15 * 8192):
     if is_youtube_url:
         yt = YouTube(file_path)
         stream = yt.streams.filter(only_audio=True).first()
