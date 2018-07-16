@@ -3,6 +3,7 @@ from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_fr
 TIMEOUT_SECONDS = 300
 apikey = "YOUR_API_KEY"
 file_path = "FILE_PATH"
+is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "wav"
@@ -17,9 +18,17 @@ metadata = [
     ('userids', userIds),
     ('encoding', encoding),
     ('samplerate', sampleRate),
-    ('languagaecode', languageCode)
+    ('languagecode', languageCode)
 ]
 
+"""Stream audio from url or youtube.
+
+responses = client.IdentifySpeaker(
+    chunk_generator_from_url(file_path, is_youtube_url=is_youtube_url), TIMEOUT_SECONDS, metadata=metadata)
+"""
+
+"""Stream audio from local file.
+"""
 responses = client.IdentifySpeaker(
     chunk_generator_from_file(file_path), TIMEOUT_SECONDS, metadata=metadata)
 
