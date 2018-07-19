@@ -40,7 +40,7 @@ AudioSegment and yields base64 encoded audio segment objects asynchronously
 
 """Stream audio from url or youtube.
 
-responses = client.IdentifyEmotion(
+responses = client.DiarizeEmotion(
     chunk_generator_from_url(file_path, is_youtube_url=is_youtube_url), TIMEOUT_SECONDS, metadata=metadata)
 """
 
@@ -49,6 +49,7 @@ responses = client.IdentifyEmotion(
 responses = client.DiarizeEmotion(
     chunk_generator_from_file(file_path), TIMEOUT_SECONDS, metadata=metadata)
 
+
 # responses is the iterator for all the response values
 for response in responses:
     print("Received message")
@@ -56,6 +57,7 @@ for response in responses:
 
 """Response.
     response = {
+        userId: userId of the speaker identified in the segment,
         emotion: Emotion identified in the segment,
         start: start of the segment,
         end: end of the segment

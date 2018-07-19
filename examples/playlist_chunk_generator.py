@@ -11,8 +11,8 @@ import sys
 from deepaffects.realtime.util import get_segment_chunk_from_pydub_chunk
 
 TIMEOUT_SECONDS = 2000
-apikey = "Pnpr9E0nEWEdVByJoGxquE7EPjbFLB0W"
-file_path = "http://wowza.earningscast.com:1935/vod/_definst_/mp4:4fc5368668748a651d62edefb78ba8a5.m4a/playlist.m3u8"
+apikey = "YOUR_API_KEY"
+file_path = "PLAYLIST_PATH"
 is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
@@ -33,16 +33,15 @@ def chunk_generator_from_playlist(file_path=None):
 
         while endlist is not True:
             m3u8_obj = m3u8.load(audio_stream_url)
-            print(m3u8_obj)
-            for i, segment in enumerate(m3u8_obj.data['segments']):
-                if last_processed < i:
+            if last_processed < m3u8_obj.media_sequence:
+                for i, segment in enumerate(m3u8_obj.data['segments']):
                     response = urlopen(base_uri + segment['uri'])
                     buff = response.read()
                     chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")
                     audio_segment, offset = get_segment_chunk_from_pydub_chunk(
                         chunk, offset, i)
-                    last_processed = i
                     yield audio_segment
+                last_processed = m3u8_obj.media_sequence
             if m3u8_obj.data['is_endlist']:
                 endlist = True
             else:

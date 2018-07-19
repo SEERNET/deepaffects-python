@@ -40,7 +40,7 @@ for response in responses:
 """Response.
 
     response = {           
-        speaker: speaker identified in the segment,
+        userId: userId of the speaker identified in the segment,
         start: start of the segment,
         end: end of the segment
     }
