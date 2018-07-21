@@ -24,6 +24,11 @@ class DeepAffectsRealtimeStub(object):
             request_serializer=deepaffects__realtime__pb2.SegmentChunk.SerializeToString,
             response_deserializer=deepaffects__realtime__pb2.SegmentEmotion.FromString,
         )
+        self.DiarizeEmotion = channel.stream_stream(
+            '/deepaffectsrealtime.DeepAffectsRealtime/DiarizeEmotion',
+            request_serializer=deepaffects__realtime__pb2.SegmentChunk.SerializeToString,
+            response_deserializer=deepaffects__realtime__pb2.SegmentDiarizeEmotion.FromString,
+        )
 
 
 class DeepAffectsRealtimeServicer(object):
@@ -47,6 +52,13 @@ class DeepAffectsRealtimeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DiarizeEmotion(self, request_iterator, context):
+        # missing associated documentation comment in .proto file
+        pass
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DeepAffectsRealtimeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -59,6 +71,11 @@ def add_DeepAffectsRealtimeServicer_to_server(servicer, server):
             servicer.IdentifyEmotion,
             request_deserializer=deepaffects__realtime__pb2.SegmentChunk.FromString,
             response_serializer=deepaffects__realtime__pb2.SegmentEmotion.SerializeToString,
+        ),
+        'DiarizeEmotion': grpc.stream_stream_rpc_method_handler(
+            servicer.DiarizeEmotion,
+            request_deserializer=deepaffects__realtime__pb2.SegmentChunk.FromString,
+            response_serializer=deepaffects__realtime__pb2.SegmentDiarizeEmotion.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
