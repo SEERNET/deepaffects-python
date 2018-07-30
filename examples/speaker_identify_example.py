@@ -1,12 +1,13 @@
 from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file, chunk_generator_from_url
 
-TIMEOUT_SECONDS = 300
+TIMEOUT_SECONDS = 10000
 apikey = "YOUR_API_KEY"
 file_path = "FILE_PATH"
 is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "wav"
+apiVersion = "v2"
 userIds = "list of userids for for speaker verification seperated by ','"
 
 # DeepAffects realtime Api client
@@ -18,7 +19,8 @@ metadata = [
     ('userids', userIds),
     ('encoding', encoding),
     ('samplerate', sampleRate),
-    ('languagecode', languageCode)
+    ('languagecode', languageCode),
+    ('apiversion', apiVersion)
 ]
 
 """Stream audio from url or youtube.
@@ -30,7 +32,7 @@ responses = client.IdentifySpeaker(
 """Stream audio from local file.
 """
 responses = client.IdentifySpeaker(
-    chunk_generator_from_file(file_path), TIMEOUT_SECONDS, metadata=metadata)
+    chunk_generator_from_file(file_path max_chunk_size=30000), TIMEOUT_SECONDS, metadata=metadata)
 
 # responses is the iterator for all the response values
 for response in responses:

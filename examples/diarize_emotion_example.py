@@ -1,6 +1,6 @@
 from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_from_file, chunk_generator_from_url
 
-TIMEOUT_SECONDS = 2000
+TIMEOUT_SECONDS = 10000
 apikey = "YOUR_API_KEY"
 file_path = "FILE_PATH"
 is_youtube_url = False

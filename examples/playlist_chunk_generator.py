@@ -10,13 +10,15 @@ import pprint
 import sys
 from deepaffects.realtime.util import get_segment_chunk_from_pydub_chunk
 
-TIMEOUT_SECONDS = 2000
+TIMEOUT_SECONDS = 10000
 apikey = "YOUR_API_KEY"
 file_path = "PLAYLIST_PATH"
 is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "mp3"
+userIds = "list of userids for for speaker verification seperated by ','"
+apiVersion = "v2"
 
 
 def chunk_generator_from_playlist(file_path=None, buffer_size=3):
@@ -67,9 +69,11 @@ client = get_deepaffects_client()
 
 metadata = [
     ('apikey', apikey),
+    ('userids', userIds),
     ('encoding', encoding),
     ('samplerate', sampleRate),
-    ('languagecode', languageCode)
+    ('languagecode', languageCode),
+    ('apiversion', apiVersion)
 ]
 
 # Implement chunk_generator() is a generator function which yields segment_chunk objects asynchronously
@@ -93,7 +97,7 @@ AudioSegment and yields base64 encoded audio segment objects asynchronously
 
 """Stream audio from earningcast.
 """
-responses = client.IdentifyEmotion(
+responses = client.DiarizeEmotion(
     chunk_generator_from_playlist(file_path), TIMEOUT_SECONDS, metadata=metadata)
 
 # responses is the iterator for all the response values

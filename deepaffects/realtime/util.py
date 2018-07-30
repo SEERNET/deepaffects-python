@@ -53,7 +53,7 @@ def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
     return stub
 
 
-def chunk_generator_from_file(file_path, max_chunk_size=15500, min_chunk_size=3000):
+def chunk_generator_from_file(file_path, max_chunk_size=30000, min_chunk_size=3000):
     # Implement this generator function to yield Audio segments
     # To generate Audio Segments use segment_chunk
     # from deepaffects.realtime.types import segment_chunk
