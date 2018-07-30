@@ -19,7 +19,7 @@ sampleRate = "16000"
 encoding = "mp3"
 
 
-def chunk_generator_from_playlist(file_path=None):
+def chunk_generator_from_playlist(file_path=None, buffer_size=3):
     try:
         offset = 0
         last_processed = -1
@@ -30,17 +30,28 @@ def chunk_generator_from_playlist(file_path=None):
         base_uri = m3u8_obj_outer.base_uri
         base_audio = m3u8_obj_outer.data['playlists'][0]['uri']
         audio_stream_url = base_uri + base_audio
+        chunk = None
+        chunk_index = 1
+        index = 0
 
         while endlist is not True:
-            m3u8_obj = m3u8.load(audio_stream_url)
-            if last_processed < m3u8_obj.media_sequence:
+            m3u8_obj = m3u8.load(audio_stream_url)            
+            if last_processed < m3u8_obj.media_sequence:                
                 for i, segment in enumerate(m3u8_obj.data['segments']):
                     response = urlopen(base_uri + segment['uri'])
                     buff = response.read()
-                    chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")
-                    audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                        chunk, offset, i)
-                    yield audio_segment
+                    if chunk_index == 1:
+                        chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")    
+                        chunk_index = chunk_index + 1
+                    elif chunk_index < buffer_size:
+                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")                                            
+                        chunk_index = chunk_index + 1
+                    elif chunk_index == buffer_size:
+                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac") 
+                        audio_segment, offset = get_segment_chunk_from_pydub_chunk(chunk, offset, index)
+                        index = index + 1
+                        yield audio_segment                                               
+                        chunk_index = 1                                                              
                 last_processed = m3u8_obj.media_sequence
             if m3u8_obj.data['is_endlist']:
                 endlist = True
@@ -50,7 +61,6 @@ def chunk_generator_from_playlist(file_path=None):
     except KeyboardInterrupt:
         print('Interrupted Stopping Stream')
         os._exit(0)
-
 
 # DeepAffects realtime Api client
 client = get_deepaffects_client()
