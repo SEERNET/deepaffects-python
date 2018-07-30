@@ -32,7 +32,7 @@ responses = client.IdentifySpeaker(
 """Stream audio from local file.
 """
 responses = client.IdentifySpeaker(
-    chunk_generator_from_file(file_path max_chunk_size=30000), TIMEOUT_SECONDS, metadata=metadata)
+    chunk_generator_from_file(file_path, max_chunk_size=30000), TIMEOUT_SECONDS, metadata=metadata)
 
 # responses is the iterator for all the response values
 for response in responses:
