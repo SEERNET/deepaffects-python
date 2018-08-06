@@ -23,8 +23,7 @@ def encode_to_base64(file):
 
 
 def get_segment_chunk_from_pydub_chunk(chunk, offset, i, userIds=None):
-
-    base64_chunk = pydub_segment_to_base64(chunk)
+    base64_chunk = pydub_segment_to_base64(chunk,i)
     print("Sending chunk %s - with size :- %s sec" % (i, len(chunk) / 1000))
     audio_segments = segment_chunk(
         encoding="wav",
@@ -38,8 +37,8 @@ def get_segment_chunk_from_pydub_chunk(chunk, offset, i, userIds=None):
     return audio_segments, offset
 
 
-def pydub_segment_to_base64(chunk):
-    chunk_file = "chunk.wav"
+def pydub_segment_to_base64(chunk,i):
+    chunk_file = "chunk-{}.wav".format(i)
     with open(chunk_file, "wb") as f:
         chunk.export(f, format="wav")
     base64_chunk = encode_to_base64(chunk_file)
