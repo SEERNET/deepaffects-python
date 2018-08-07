@@ -76,24 +76,18 @@ def chunk_generator_from_file(file_path, max_chunk_size=30000, min_chunk_size=30
     offset = None
     previous_chunk = None
 
-    for i, chunk in enumerate(audio_clip[::max_chunk_size]):
+    for i, chunk in enumerate(audio_clip[::max_chunk_size]):        
         if offset is None:
             offset = 0
         if previous_chunk is not None:
             if len(chunk) <= min_chunk_size:
-                previous_chunk = previous_chunk + chunk
-                audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    previous_chunk, offset, i)
-                yield audio_segment
+                previous_chunk = previous_chunk + chunk                
 
             elif (len(chunk) < max_chunk_size) and (len(chunk) > min_chunk_size):
                 audio_segment, offset = get_segment_chunk_from_pydub_chunk(
                     previous_chunk, offset, i)
                 previous_chunk = chunk
-                yield audio_segment
-                audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    previous_chunk, offset, i)
-                yield audio_segment
+                yield audio_segment                
 
             else:
                 audio_segment, offset = get_segment_chunk_from_pydub_chunk(
@@ -107,6 +101,10 @@ def chunk_generator_from_file(file_path, max_chunk_size=30000, min_chunk_size=30
                     chunk, offset, i)
                 yield audio_segment
             previous_chunk = chunk
+    audio_segment, offset = get_segment_chunk_from_pydub_chunk(
+                    previous_chunk, offset, i)    
+    yield audio_segment
+    
 
 
 def chunk_generator_from_url(file_path, is_youtube_url=False, chunk_size=15 * 8192):
