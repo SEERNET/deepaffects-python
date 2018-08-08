@@ -41,7 +41,7 @@ def pydub_segment_to_base64(chunk,i):
     with open(chunk_file, "wb") as f:
         chunk.export(f, format="wav")
     base64_chunk = encode_to_base64(chunk_file)
-    os.remove(chunk_file)
+    # os.remove(chunk_file)
     return base64_chunk
 
 
