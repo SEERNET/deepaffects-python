@@ -1,7 +1,7 @@
 from deepaffects.realtime.deepaffects_realtime_pb2 import SegmentChunk
 
 
-def segment_chunk(content, encoding="wav", languageCode="en-US", sampleRate=8000, segmentOffset=0, duration=0, userIds=None):
+def segment_chunk(content, encoding="wav", languageCode="en-US", sampleRate=8000, segmentOffset=0, duration=0):
     """segment_chunk.
 
     Args:
@@ -21,6 +21,5 @@ def segment_chunk(content, encoding="wav", languageCode="en-US", sampleRate=8000
         encoding=encoding,
         languageCode=languageCode,
         sampleRate=sampleRate,
-        userIds=userIds,
         duration=duration,
         segmentOffset=segmentOffset)
