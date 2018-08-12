@@ -7,16 +7,18 @@ is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "wav"
-userIds = "list of userids for for speaker verification seperated by ','"
+speakerIds = "list of userids for for speaker verification seperated by ','"
+verbose = "True"
 # DeepAffects realtime Api client
 client = get_deepaffects_client()
 
 metadata = [
     ('apikey', apikey),
     ('encoding', encoding),
-    ('userids', userIds),
+    ('speakerids', speakerIds),
     ('samplerate', sampleRate),
-    ('languagecode', languageCode)
+    ('languagecode', languageCode),
+    ('verbose', verbose)
 ]
 
 # Implement chunk_generator() is a generator function which yields segment_chunk objects asynchronously

@@ -17,8 +17,9 @@ is_youtube_url = False
 languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "mp3"
-userIds = "list of userids for for speaker verification seperated by ','"
+speakerIds = "list of userids for for speaker verification seperated by ','"
 apiVersion = "v2"
+verbose = "True"
 
 
 def chunk_generator_from_playlist(file_path=None, buffer_size=3):
@@ -69,11 +70,12 @@ client = get_deepaffects_client()
 
 metadata = [
     ('apikey', apikey),
-    ('userids', userIds),
+    ('speakerids', speakerIds),
     ('encoding', encoding),
     ('samplerate', sampleRate),
     ('languagecode', languageCode),
-    ('apiversion', apiVersion)
+    ('apiversion', apiVersion),
+    ('verbose', verbose)
 ]
 
 # Implement chunk_generator() is a generator function which yields segment_chunk objects asynchronously

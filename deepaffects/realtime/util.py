@@ -22,7 +22,7 @@ def encode_to_base64(file):
         return base64.b64encode(f1.read()).decode('utf-8')
 
 
-def get_segment_chunk_from_pydub_chunk(chunk, offset, i, userIds=None):
+def get_segment_chunk_from_pydub_chunk(chunk, offset, i):
     base64_chunk = pydub_segment_to_base64(chunk,i)
     print("Sending chunk %s - with size :- %s sec" % (i, len(chunk) / 1000))
     audio_segments = segment_chunk(
@@ -30,8 +30,7 @@ def get_segment_chunk_from_pydub_chunk(chunk, offset, i, userIds=None):
         languageCode="en-US",
         sampleRate=8000,
         content=base64_chunk,
-        duration=len(chunk) / 1000,
-        userIds=userIds,
+        duration=len(chunk) / 1000,        
         segmentOffset=offset)
     offset = (offset + len(chunk) / 1000)
     return audio_segments, offset

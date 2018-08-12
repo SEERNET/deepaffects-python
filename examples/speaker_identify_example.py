@@ -8,7 +8,8 @@ languageCode = "en-Us"
 sampleRate = "16000"
 encoding = "wav"
 apiVersion = "v2"
-userIds = "list of userids for for speaker verification seperated by ','"
+speakerIds = "list of userids for for speaker verification seperated by ','"
+verbose = "True"
 
 # DeepAffects realtime Api client
 client = get_deepaffects_client()
@@ -16,11 +17,12 @@ client = get_deepaffects_client()
 # chunk_generator() is a generator function which yields audio segment object asynchronously
 metadata = [
     ('apikey', apikey),
-    ('userids', userIds),
+    ('speakerids', speakerIds),
     ('encoding', encoding),
     ('samplerate', sampleRate),
     ('languagecode', languageCode),
-    ('apiversion', apiVersion)
+    ('apiversion', apiVersion),
+    ('verbose', verbose)
 ]
 
 """Stream audio from url or youtube.
