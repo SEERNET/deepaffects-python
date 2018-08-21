@@ -137,9 +137,7 @@ async function run() {
           };
           Datajson.push(callReport);
           fs.writeFile(
-            "earning-call-transcripts/" +
-              getFileName(company, madeLink) +
-              ".json",
+            "transcripts/" + getFileName(company, madeLink) + ".json",
             JSON.stringify(callReport),
             error => {
               console.log(error);
