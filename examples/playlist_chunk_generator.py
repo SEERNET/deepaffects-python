@@ -36,6 +36,7 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=3):
         chunk = None
         chunk_index = 1
         index = 0
+        unsent_segment = False
 
         while endlist is not True:
             m3u8_obj = m3u8.load(audio_stream_url)            
@@ -46,15 +47,23 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=3):
                     if chunk_index == 1:
                         chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")    
                         chunk_index = chunk_index + 1
+                        unsent_segment = True
                     elif chunk_index < buffer_size:
                         chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")                                            
                         chunk_index = chunk_index + 1
+                        unsent_segment = True
                     elif chunk_index == buffer_size:
                         chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac") 
                         audio_segment, offset = get_segment_chunk_from_pydub_chunk(chunk, offset, index)
+                        unsent_segment = False
                         index = index + 1
                         yield audio_segment                                               
-                        chunk_index = 1                                                              
+                        chunk_index = 1  
+                if unsent_segment is True:
+                    audio_segment, offset = get_segment_chunk_from_pydub_chunk(chunk, offset, index)
+                    index = index + 1
+                    unsent_segment = False
+                    yield audio_segment                                                                                                           
                 last_processed = m3u8_obj.media_sequence
             if m3u8_obj.data['is_endlist']:
                 endlist = True
