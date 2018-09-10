@@ -22,7 +22,7 @@ apiVersion = "v2"
 verbose = "True"
 
 
-def chunk_generator_from_playlist(file_path=None, buffer_size=3):
+def chunk_generator_from_playlist(file_path=None, buffer_size=30000):
     try:
         offset = 0
         last_processed = -1
@@ -33,42 +33,36 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=3):
         base_uri = m3u8_obj_outer.base_uri
         base_audio = m3u8_obj_outer.data['playlists'][0]['uri']
         audio_stream_url = base_uri + base_audio
-        chunk = None
         chunk_index = 1
         index = 0
         unsent_segment = False
-
         while endlist is not True:
             m3u8_obj = m3u8.load(audio_stream_url)            
-            if last_processed < m3u8_obj.media_sequence:                
+            if last_processed < m3u8_obj.media_sequence:                                
                 for i, segment in enumerate(m3u8_obj.data['segments']):
                     response = urlopen(base_uri + segment['uri'])
-                    buff = response.read()
+                    buff = response.read()                    
                     if chunk_index == 1:
-                        chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")    
-                        chunk_index = chunk_index + 1
-                        unsent_segment = True
-                    elif chunk_index < buffer_size:
-                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")                                            
-                        chunk_index = chunk_index + 1
-                        unsent_segment = True
-                    elif chunk_index == buffer_size:
-                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac") 
-                        audio_segment, offset = get_segment_chunk_from_pydub_chunk(chunk, offset, index)
-                        unsent_segment = False
-                        index = index + 1
+                        chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")                            
+                    else :
+                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")                                                        
+                    offset_in_milliseconds = offset * 1000                    
+                    if (len(chunk) - (offset_in_milliseconds)) > buffer_size :
+                        segment_chunk = segment = chunk[ offset_in_milliseconds: offset_in_milliseconds + buffer_size]                                            
+                        audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)                        
+                        yield audio_segment                                                                       
+                    chunk_index = chunk_index + 1                    
+                if(len(chunk) - (offset * 1000)) != 0:
+                        segment_chunk = segment = chunk[ offset * 1000:]                                                
+                        audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)                        
                         yield audio_segment                                               
-                        chunk_index = 1  
-                if unsent_segment is True:
-                    audio_segment, offset = get_segment_chunk_from_pydub_chunk(chunk, offset, index)
-                    index = index + 1
-                    unsent_segment = False
-                    yield audio_segment                                                                                                           
                 last_processed = m3u8_obj.media_sequence
-            if m3u8_obj.data['is_endlist']:
+
+            if m3u8_obj.data['is_endlist'] == True:
                 endlist = True
             else:
                 time.sleep(2)
+
 
     except KeyboardInterrupt:
         print('Interrupted Stopping Stream')
