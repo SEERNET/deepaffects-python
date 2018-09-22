@@ -15,7 +15,6 @@ Diarize an audio file.
 ### Example 
 ```python
 from __future__ import print_function
-import time
 import deepaffects
 from deepaffects.rest import ApiException
 from pprint import pprint
