@@ -51,7 +51,7 @@ def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
     return stub
 
 
-def chunk_generator_from_file(file_path, max_chunk_size=30000, min_chunk_size=3000):
+def chunk_generator_from_file(file_path, buffer_size=30000):
     # Implement this generator function to yield Audio segments
     # To generate Audio Segments use segment_chunk
     # from deepaffects.realtime.types import segment_chunk
@@ -73,57 +73,59 @@ def chunk_generator_from_file(file_path, max_chunk_size=30000, min_chunk_size=30
     """
     audio_clip = AudioSegment.from_file(file_path)
     offset = None
-    previous_chunk = None
-
-    for i, chunk in enumerate(audio_clip[::max_chunk_size]):        
+    buffer_chunk = None
+    index = 0
+    for i, chunk in enumerate(audio_clip[::buffer_size]):
         if offset is None:
             offset = 0
-        if previous_chunk is not None:
-            if len(chunk) <= min_chunk_size:
-                previous_chunk = previous_chunk + chunk                
+        if i == 0:
+            buffer_chunk = chunk
+        else:
+            buffer_chunk = buffer_chunk + chunk
+        offset_in_milliseconds = offset * 1000        
+        if ((len(buffer_chunk) - (offset_in_milliseconds)) > buffer_size):            
+            segment_chunk = buffer_chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]            
+            audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+            index = index + 1
+            yield audio_segment        
 
-            elif (len(chunk) < max_chunk_size) and (len(chunk) > min_chunk_size):
-                audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    previous_chunk, offset, i)
-                previous_chunk = chunk
-                yield audio_segment                
-
-            else:
-                audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    previous_chunk, offset, i)
-                previous_chunk = chunk
-                yield audio_segment
-
-        if previous_chunk is None:
-            if len(audio_clip) < max_chunk_size:
-                audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    chunk, offset, i)
-                yield audio_segment
-            previous_chunk = chunk
-    audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-                    previous_chunk, offset, i)    
-    yield audio_segment
-    
+    if ((len(buffer_chunk) - (offset * 1000)) != 0):        
+        segment_chunk = buffer_chunk[offset * 1000:]
+        audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+        index = index + 1
+        yield audio_segment
+        
 
 
-def chunk_generator_from_url(file_path, is_youtube_url=False, chunk_size=15 * 8192):
+def chunk_generator_from_url(file_path, is_youtube_url=False, buffer_size=30000, chunk_size=15 * 8192):
     if is_youtube_url:
         yt = YouTube(file_path)
         stream = yt.streams.filter(only_audio=True).first()
         download_url = stream.url
     else:
         download_url = file_path
-
-    final_chunk = None
-    last_seg_len = 0
-    for i, chunk in enumerate(get(url=download_url, streaming=True, chunk_size=chunk_size)):
-        if final_chunk is None:
-            final_chunk = chunk
+    offset = None
+    buffer_chunk = None
+    index = 0
+    for i, chunk in enumerate(get(url=download_url, streaming=True, chunk_size=chunk_size)):        
+        if offset is None:
+            offset = 0
+        if i == 0:
+            buffer_chunk_raw = chunk
         else:
-            final_chunk = final_chunk + chunk
-        seg = AudioSegment.from_file(io.BytesIO(
-            final_chunk))
-        audio_segment, offset = get_segment_chunk_from_pydub_chunk(
-            seg[last_seg_len:], last_seg_len / 1000, i)
+            buffer_chunk_raw = buffer_chunk_raw + chunk
+
+        buffer_chunk = AudioSegment.from_file(io.BytesIO(
+            buffer_chunk_raw))
+
+        offset_in_milliseconds = offset * 1000
+        if (len(buffer_chunk) - (offset_in_milliseconds)) > buffer_size:            
+            segment_chunk = buffer_chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]            
+            audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+            index = index + 1
+            yield audio_segment        
+    if (len(buffer_chunk) - (offset * 1000)) != 0:        
+        segment_chunk = buffer_chunk[offset * 1000:]
+        audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+        index = index + 1
         yield audio_segment
-        last_seg_len = int(seg.duration_seconds * 1000)
