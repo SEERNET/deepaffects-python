@@ -51,7 +51,7 @@ def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
     return stub
 
 
-def chunk_generator_from_file(file_path, buffer_size=30000):    
+def chunk_generator_from_file(file_path, buffer_size=30000):
     # Implement this generator function to yield Audio segments
     # To generate Audio Segments use segment_chunk
     # from deepaffects.realtime.types import segment_chunk
@@ -71,11 +71,11 @@ def chunk_generator_from_file(file_path, buffer_size=30000):
     segments more than 3 sec
     AudioSegment and yields base64 encoded audio segment objects asynchronously
     """
-    audio_clip = AudioSegment.from_file(file_path)    
+    audio_clip = AudioSegment.from_file(file_path)
     offset = None
     buffer_chunk = None
     index = 0
-    for i, chunk in enumerate(audio_clip[::buffer_size]):            
+    for i, chunk in enumerate(audio_clip[::buffer_size]):
         if offset is None:
             offset = 0
         if i == 0:
