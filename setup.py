@@ -18,18 +18,8 @@ REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "pym
 
 
 def readme():
-    try:
-        from pypandoc import convert
-        return convert('README.md', 'rst')
-
-    except ImportError:
-        with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-            return readme.read()
-
-    except OSError:
-        with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-            return readme.read()
-
+    with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+        return readme.read()
 
 setup(
     name=NAME,
@@ -45,5 +35,6 @@ setup(
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
-    long_description=readme()
+    long_description=readme(),
+    long_description_content_type="text/markdown"
 )
