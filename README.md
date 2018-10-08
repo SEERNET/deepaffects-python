@@ -1,6 +1,6 @@
 # deepaffects-python
 
-[![Build Status](https://travis-ci.org/SEERNET/deepaffects-python.svg)](https://travis-ci.org/SEERNET/deepaffects-python)
+[![Build Status](https://travis-ci.org/SEERNET/deepaffects-python.svg?branch=master)](https://travis-ci.org/SEERNET/deepaffects-python)
 [![PyPI version](https://badge.fury.io/py/deepaffects.svg)](https://badge.fury.io/py/deepaffects)
 
 Python client library for DeepAffects APIs
