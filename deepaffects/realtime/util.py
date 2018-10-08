@@ -8,6 +8,7 @@ import io
 import sys
 import pydub
 import base64
+import uuid
 from pydub import AudioSegment
 from pytube.request import get
 from pytube import YouTube
@@ -36,12 +37,14 @@ def get_segment_chunk_from_pydub_chunk(chunk, offset, i):
     return audio_segments, offset
 
 
-def pydub_segment_to_base64(chunk,i):
-    chunk_file = "chunk-{}.wav".format(i)
-    with open(chunk_file, "wb") as f:
-        chunk.export(f, format="wav")
+def pydub_segment_to_base64(chunk,i):    
+    chunk_file = "chunk-{}-{}.wav".format(i, str(uuid.uuid4()))
+    chunk.export(chunk_file, format="wav")        
     base64_chunk = encode_to_base64(chunk_file)
-    os.remove(chunk_file)
+    try:
+        os.remove(chunk_file)
+    except:
+        pass    
     return base64_chunk
 
 
