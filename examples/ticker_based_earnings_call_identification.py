@@ -20,8 +20,6 @@ encoding = "mp3"
 apiVersion = "v2"
 ticker = "TICKER_SYMBOL_FOR_COMPANY"
 
-
-
 def chunk_generator_from_playlist(file_path=None, buffer_size=30000):
     try:
         offset = 0
@@ -47,7 +45,7 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=30000):
                         chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")
                     offset_in_milliseconds = offset * 1000
                     if (len(chunk) - (offset_in_milliseconds)) > buffer_size:
-                        segment_chunk = chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]                        
+                        segment_chunk = chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]
                         audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
                         index = index + 1
                         yield audio_segment
@@ -72,13 +70,12 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=30000):
 client = get_deepaffects_client()
 
 metadata = [
-    ('apikey', apikey),    
+    ('apikey', apikey),
     ('encoding', encoding),
     ('samplerate', sampleRate),
     ('languagecode', languageCode),
     ('apiversion', apiVersion),
-    ('verbose', verbose),
-    ('ticker', ticker)    
+    ('ticker', ticker)
 ]
 
 # Implement chunk_generator() is a generator function which yields segment_chunk objects asynchronously
