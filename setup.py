@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 import os
 
 NAME = "deepaffects"
-VERSION = "1.3.1"
+VERSION = "1.3.2"
 # To install the library, run the following
 #
 # python setup.py install
