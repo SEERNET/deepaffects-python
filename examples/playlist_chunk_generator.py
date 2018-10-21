@@ -41,10 +41,13 @@ def chunk_generator_from_playlist(file_path=None, buffer_size=30000):
                 for i, segment in enumerate(m3u8_obj.data['segments']):
                     response = urlopen(base_uri + segment['uri'])
                     buff = response.read()
+                    new_chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")
+                    if new_chunk.frame_rate > 16000:                                                     
+                        new_chunk = new_chunk.set_frame_rate(16000)                            
                     if chunk_index == 1:
-                        chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")
+                        chunk = new_chunk
                     else:
-                        chunk = chunk + AudioSegment.from_file(io.BytesIO(buff), "aac")
+                        chunk = chunk + new_chunk
                     offset_in_milliseconds = offset * 1000
                     if (len(chunk) - (offset_in_milliseconds)) > buffer_size:
                         segment_chunk = chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]                        
