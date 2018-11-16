@@ -29,7 +29,7 @@ def get_segment_chunk_from_pydub_chunk(chunk, offset, i):
     audio_segments = segment_chunk(
         encoding="wav",
         languageCode="en-US",
-        sampleRate=8000,
+        sampleRate=chunk.frame_rate,
         content=base64_chunk,
         duration=len(chunk) / 1000,        
         segmentOffset=offset)
