@@ -5,12 +5,10 @@ apikey = "YOUR_API_KEY"
 file_path = "PLAYLIST_PATH"
 ticker = "TICKER_SYMBOL"
 out_file_name = "OUT_FILE_NAME"
-languageCode = "en-Us"
 verbose = "True"
 
 metadata = [
     ('apikey', apikey),        
-    ('languagecode', languageCode),    
     ('ticker', ticker),
     ('verbose', verbose)
 ]

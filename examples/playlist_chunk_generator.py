@@ -3,7 +3,6 @@ from deepaffects.realtime.util import get_deepaffects_client, chunk_generator_fr
 TIMEOUT_SECONDS = 10000
 apikey = "YOUR_API_KEY"
 file_path = "PLAYLIST_PATH"
-languageCode = "en-Us"
 speakerIds = "list of userids for for speaker verification seperated by ','"
 verbose = "True"
 
@@ -13,7 +12,6 @@ client = get_deepaffects_client()
 metadata = [
     ('apikey', apikey),
     ('speakerids', speakerIds),
-    ('languagecode', languageCode),    
     ('verbose', verbose)
 ]
 
