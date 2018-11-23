@@ -1,16 +1,19 @@
 from __future__ import print_function
-
 import random
 import time
 import grpc
 import os
+import uuid
 import io
 import sys
+import m3u8
 import pydub
+import requests
 import base64
 import uuid
 from pydub import AudioSegment
 from pytube.request import get
+from pytube.compat import urlopen
 from pytube import YouTube
 
 import deepaffects.realtime.deepaffects_realtime_pb2_grpc as deepaffects_grpc
@@ -52,6 +55,68 @@ def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
     channel = grpc.insecure_channel(host_url)
     stub = deepaffects_grpc.DeepAffectsRealtimeStub(channel)
     return stub
+
+
+def chunk_generator_from_playlist(out_file_name=None, file_path=None, buffer_size=30000, download_audio=True):
+    chunk = None
+    try:
+        offset = 0
+        last_processed = -1
+        endlist = False
+        # for playlists with m3u8 extensions
+        m3u8_obj_outer = m3u8.load(file_path)
+        base_uri = m3u8_obj_outer.base_uri
+        base_audio = m3u8_obj_outer.data['playlists'][0]['uri']
+        audio_stream_url = base_uri + base_audio
+        chunk_index = 1
+        index = 0
+        unsent_segment = False
+        while endlist is not True:
+            try:                
+                m3u8_obj = m3u8.load(audio_stream_url)
+                if last_processed < m3u8_obj.media_sequence:
+                    for i, segment in enumerate(m3u8_obj.data['segments']):
+                        response = urlopen(base_uri + segment['uri'])
+                        buff = response.read()
+                        new_chunk = AudioSegment.from_file(io.BytesIO(buff), "aac")                                            
+
+                        if (chunk_index == 1) and (last_processed == -1):
+                            chunk = new_chunk
+                        else:
+                            chunk = chunk + new_chunk
+                                                        
+                        offset_in_milliseconds = offset * 1000
+                        if (len(chunk) - (offset_in_milliseconds)) > buffer_size:
+                            segment_chunk = chunk[offset_in_milliseconds: offset_in_milliseconds + buffer_size]
+                            audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+                            index = index + 1
+                            yield audio_segment
+                        chunk_index = chunk_index + 1                
+                    last_processed = m3u8_obj.media_sequence            
+
+                if m3u8_obj.data['is_endlist'] == True:
+                    endlist = True
+                else:
+                    time.sleep(2)
+            except Exception as e:
+                print(e)                
+                endlist = True
+
+        if (len(chunk) - (offset * 1000)) > 0:
+            segment_chunk = chunk[offset * 1000:]
+            audio_segment, offset = get_segment_chunk_from_pydub_chunk(segment_chunk, offset, index)
+            index = index + 1
+            yield audio_segment        
+
+    except Exception as e:
+        print(e)                
+    finally:        
+        if download_audio and (out_file_name is not None):        
+            dir_path = "./output"
+            if not os.path.exists(dir_path):
+                os.makedirs(dir_path)
+            chunk.export(dir_path + out_file_name + "-audio-out.wav", format="wav")
+
 
 
 def chunk_generator_from_file(file_path, buffer_size=30000):
