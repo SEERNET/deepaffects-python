@@ -20,6 +20,7 @@ import deepaffects.realtime.deepaffects_realtime_pb2_grpc as deepaffects_grpc
 import deepaffects.realtime.deepaffects_realtime_pb2 as deepaffects_types
 from deepaffects.realtime.types import segment_chunk
 
+MAX_MESSAGE_LENGTH = 1000000000
 
 def encode_to_base64(file):
     with open(file, "rb") as f1:
@@ -52,7 +53,7 @@ def pydub_segment_to_base64(chunk,i):
 
 
 def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
-    channel = grpc.insecure_channel(host_url)
+    channel = grpc.insecure_channel(host_url, options=[('grpc.max_send_message_length', MAX_MESSAGE_LENGTH), ('grpc.max_receive_message_length', MAX_MESSAGE_LENGTH)])
     stub = deepaffects_grpc.DeepAffectsRealtimeStub(channel)
     return stub
 
