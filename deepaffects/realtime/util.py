@@ -58,7 +58,7 @@ def get_deepaffects_client(host_url='realtime.deepaffects.com:80'):
     return stub
 
 
-def chunk_generator_from_playlist(out_file_name=None, file_path=None, buffer_size=30000, download_audio=True):
+def chunk_generator_from_playlist(file_path=None, out_file_name=None, buffer_size=30000, download_audio=True):
     chunk = None
     try:
         offset = 0
