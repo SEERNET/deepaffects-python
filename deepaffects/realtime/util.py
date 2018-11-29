@@ -111,7 +111,7 @@ def chunk_generator_from_playlist(out_file_name=None, file_path=None, buffer_siz
     except Exception as e:
         print(e)                
     finally:        
-        if download_audio and (out_file_name is not None):        
+        if download_audio and (out_file_name is not None) and (chunk is not None):        
             dir_path = "./output"
             if not os.path.exists(dir_path):
                 os.makedirs(dir_path)
