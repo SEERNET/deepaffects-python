@@ -1,5 +1,0 @@
-include README.md
-include LICENSE
-include docs/*.md
-include test/data/*.wav
-include test/data/*.mp3
