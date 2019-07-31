@@ -10,11 +10,20 @@ class PunctApi():
         
         PunctApi.API_KEY = api_key
     
-    def async_text_punctuate(self, texts):
+    def async_text_punctuate(self, texts, webhook=None, request_id=None):
         if not isinstance(texts, list):
             logging.warn('Batching multiple texts is much faster than running one by one.')
             texts = [texts]
         
-        output = requests.post(url=PunctApi.URL, json={'texts': texts}, params={'apikey': PunctApi.API_KEY}).json()
+        if not webhook:
+            logging.warn('Consider using webhooks for async requests.')
+
+        params = {'apikey': PunctApi.API_KEY}
+        if webhook:
+            params['webhook'] = webhook
+        if request_id:
+            params['request_id'] = request_id
+
+        output = requests.post(url=PunctApi.URL, json={'texts': texts}, params=params).json()
 
         return output
