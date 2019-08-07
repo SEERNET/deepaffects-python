@@ -251,3 +251,113 @@ class EmotionApi(object):
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
                                         collection_formats=collection_formats)
+    def sync_text_recognise_emotion(self, body, **kwargs):
+        """
+        Find emotion in text
+        Extract emotion from text.
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.sync_text_recognise_emotion(body, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param Text: Text that needs to be featurized. (required)
+        :return: list[EmotionScore]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('callback'):
+            return self.sync_text_recognise_emotion_with_http_info(body, **kwargs)
+        else:
+            (data) = self.sync_text_recognise_emotion_with_http_info(body, **kwargs)
+            return data
+
+    def sync_text_recognise_emotion_with_http_info(self, body, **kwargs):
+        """
+        Find emotion in text
+        Extract emotion from text.
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.sync_text_recognise_emotion_with_http_info(body, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param Text body: Text that needs to be featurized. (required)
+        :return: list[EmotionScore]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['body']
+        all_params.append('callback')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method sync_text_recognise_emotion" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'body' is set
+        if ('body' not in params) or (params['body'] is None):
+            raise ValueError(
+                "Missing the required parameter `body` when calling `sync_text_recognise_emotion`")
+
+        collection_formats = {}
+
+        resource_path = '/text/generic/api/latest/sync/text_recognise_emotion'.replace(
+            '{format}', 'json')
+        path_params = {}
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type(['application/json'])
+
+        # Authentication setting
+        auth_settings = ['UserSecurity']
+
+        return self.api_client.call_api(resource_path, 'POST',
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type='json',
+                                        auth_settings=auth_settings,
+                                        callback=params.get('callback'),
+                                        _return_http_data_only=params.get(
+                                            '_return_http_data_only'),
+                                        _preload_content=params.get(
+                                            '_preload_content', True),
+                                        _request_timeout=params.get(
+                                            '_request_timeout'),
+                                        collection_formats=collection_formats)
