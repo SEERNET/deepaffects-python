@@ -27,7 +27,7 @@ class AsrApi():
                             audio_file_path=None, url=None,
                             encoding=None, sampleRate=None,
                             languageCode='en-US', separateSpeakerPerChannel=False,
-                            speakerCount=-1, audioType='callcenter',
+                            audioType='callcenter',
                             enablePunctuation=True, enableSpeakerDiarization=False, source=None,
                             webhook=None, request_id=None
                         ):
