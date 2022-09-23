@@ -14,7 +14,7 @@ VERSION = "1.4.1"
 # http://pypi.python.org/pypi/setuptools
 
 REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "pymediainfo >= 2.1.9", "grpcio==1.13.0",
-            "protobuf==3.6.0", "pydub==0.22.1", "pytube==9.2.2"]
+            "protobuf==3.18.3", "pydub==0.22.1", "pytube==9.2.2"]
 
 
 def readme():
